@@ -56,7 +56,7 @@ def main(cfg: OmegaConf):
 	if cfg.use_wandb:
 		wandb.init(
 			project=cfg.wandb.project,
-			name=cfg.name,
+			name=cfg.wandb.get("run", cfg.name),
 			group=cfg.wandb.group,
 			monitor_gym=True,
 			save_code=True,
