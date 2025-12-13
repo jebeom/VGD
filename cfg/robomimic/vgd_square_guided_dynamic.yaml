@@ -1,17 +1,26 @@
+# dynamic guided : use_dynamic_guidance: True
+#                :  guidance_warmup_steps: 0 # no warmup
+#                :  guidance_time_anneal: off
+#                :  target_uncertainty: 0.01
+#                :  uncertainty_beta: 1.0
+# if ddim step == 4:
+#     ddim_steps: 4
+#     guidance_last_k_steps: 2
+
 defaults:
   - _self_
 hydra:
   run:
     dir: ${logdir}
 
-name: robomimic_square_vgd_guided_${now:%Y-%m-%d}_${now:%H-%M-%S}_${seed}
+name: AnotherSeed_TDerror_targetclamp_lr3e4_nowarm_robomimic_square_vgd_dynamic_guided_noguided_targetuncertainty_${now:%Y-%m-%d}_${now:%H-%M-%S}_${seed}
 logdir: ${log_dir}/robomimic-vgd/${name}/${now:%Y-%m-%d}_${now:%H-%M-%S}_${seed}
 base_policy_path: ./dppo/log/robomimic-pretrain/square/square_pre_diffusion_mlp_ta4_td100_ddim-100steps/2025-04-11_19-13-26_44/checkpoint/state_3000.pt
 offline_data_path: ./dppo/log/robomimic/square_traj_data/train_offline.npz
 normalization_path: ./dppo/log/robomimic/${env_name}/normalization.npz
 dppo_path: ./dppo
 
-seed: 2
+seed: 1
 device: cuda:0
 use_wandb: True
 torch_compile: False
@@ -60,9 +69,9 @@ wandb:
   group: robomimic-square
 
 train:
-  use_dynamic_guidance: False
+  use_dynamic_guidance: True
   tau: 0.005
-  actor_lr: 3e-4
+  actor_lr: 5e-4
   batch_size: 512
   train_freq: 1
   utd: 20
@@ -71,12 +80,14 @@ train:
   layer_size: 2048
   num_layers: 3
   discount: 0.999
-  n_critics: 2
+  n_critics: 4
   critic_backup_combine_type: min
+  target_uncertainty: 0.01
+  uncertainty_beta: 1.0
   # Guided denoising params (guidance-only + x0)
   guidance_lambda: 0.005
-  guidance_warmup_steps: 80000
-  guidance_time_anneal: linear
+  guidance_warmup_steps: 0
+  guidance_time_anneal: off
   guidance_last_k_steps: 3
   guidance_decode_steps: -1
 

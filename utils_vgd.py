@@ -97,7 +97,36 @@ class LoggingCallback(BaseCallback):
 						"train/episodes": self.total_episodes,
 					}
 					# add any recorded scalar from SB3 logger if present
-					name_to_val = getattr(self.locals['self'].logger, 'name_to_value', {})
+
+
+
+					sb3_logger = self.locals['self'].logger
+					name_to_val = getattr(sb3_logger, 'name_to_value', {})
+                
+                    # 1. Q값 관련 키만 추출 (q1_mean, q2_mean 등)
+					q_keys = [k for k in name_to_val.keys() if "train/q" in k and "_mean" in k]
+                    
+                    # 2. log_vals에 Q값 추가 및 리스트로 모으기
+					q_values = []
+					for k in q_keys:
+						val = name_to_val[k]
+						log_vals[k] = val
+						q_values.append(val)
+					
+					# 3. Q Max - Q Min 차이 계산 및 추가
+					if len(q_values) > 0:
+						q_max = max(q_values)
+						q_min = min(q_values)
+						q_diff_max_min = q_max - q_min
+						log_vals["train/q_diff_max_min"] = q_diff_max_min
+
+					# 4. 그 외 train()에서 기록한 나머지 지표들도 모두 가져오기
+					# (예: guide/ratio, train/critic_loss 등)
+					for k, v in name_to_val.items():
+						if k not in log_vals: # 이미 넣은 건 덮어쓰지 않음
+							log_vals[k] = v
+
+					# name_to_val = getattr(self.locals['self'].logger, 'name_to_value', {})
 					wandb.log(log_vals, step=self.log_count)
 					if np.sum(self.episode_completed) > 0:
 						wandb.log({

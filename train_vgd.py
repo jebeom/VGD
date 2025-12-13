@@ -29,7 +29,7 @@ import d4rl.gym_mujoco
 import sys
 sys.path.append('./dppo')
  
-from stable_baselines3 import VGD
+from stable_baselines3 import VGD, VGD_DYNA
 from stable_baselines3.common.callbacks import CheckpointCallback, BaseCallback
 from stable_baselines3.common.env_util import make_vec_env
 from stable_baselines3.common.vec_env import SubprocVecEnv, DummyVecEnv
@@ -99,32 +99,65 @@ def main(cfg: OmegaConf):
 		post_linear_modules=post_linear_modules,
 		n_critics=cfg.train.n_critics,
 	)
+	if cfg.train.use_dynamic_guidance:
+		print("Using VGD with dynamic guidance")
+		model = VGD_DYNA(
+			"MlpPolicy",
+			env,
+			learning_rate=cfg.train.actor_lr,
+			buffer_size=10000000,
+			learning_starts=1,
+			batch_size=cfg.train.batch_size,
+			tau=cfg.train.tau,
+			gamma=cfg.train.discount,
+			train_freq=cfg.train.train_freq,
+			gradient_steps=cfg.train.utd,
+			action_noise=None,
+			optimize_memory_usage=False,
+			tensorboard_log=cfg.logdir,
+			verbose=1,
+			policy_kwargs=policy_kwargs,
+			diffusion_policy=base_policy,
+			diffusion_act_dim=(cfg.act_steps, cfg.action_dim),
+			critic_backup_combine_type=cfg.train.critic_backup_combine_type,
+			target_uncertainty=getattr(cfg.train, 'target_uncertainty', 0.0),
+   			uncertainty_beta=getattr(cfg.train, 'uncertainty_beta', 0.0),
+			guidance_lambda=getattr(cfg.train, 'guidance_lambda', 0.0),
+			guidance_warmup_steps=getattr(cfg.train, 'guidance_warmup_steps', 0),
+			guidance_time_anneal=getattr(cfg.train, 'guidance_time_anneal', 'linear'),
+			guidance_last_k_steps=getattr(cfg.train, 'guidance_last_k_steps', 0),
+			guidance_decode_steps=getattr(cfg.train, 'guidance_decode_steps', -1),
+		)
+	else:
+		model = VGD(
+			"MlpPolicy",
+			env,
+			learning_rate=cfg.train.actor_lr,
+			buffer_size=10000000,
+			learning_starts=1,
+			batch_size=cfg.train.batch_size,
+			tau=cfg.train.tau,
+			gamma=cfg.train.discount,
+			train_freq=cfg.train.train_freq,
+			gradient_steps=cfg.train.utd,
+			action_noise=None,
+			optimize_memory_usage=False,
+			tensorboard_log=cfg.logdir,
+			verbose=1,
+			policy_kwargs=policy_kwargs,
+			diffusion_policy=base_policy,
+			diffusion_act_dim=(cfg.act_steps, cfg.action_dim),
+			critic_backup_combine_type=cfg.train.critic_backup_combine_type,
+			guidance_lambda=getattr(cfg.train, 'guidance_lambda', 0.0),
+			guidance_warmup_steps=getattr(cfg.train, 'guidance_warmup_steps', 0),
+			guidance_time_anneal=getattr(cfg.train, 'guidance_time_anneal', 'linear'),
+			guidance_last_k_steps=getattr(cfg.train, 'guidance_last_k_steps', 0),
+			guidance_decode_steps=getattr(cfg.train, 'guidance_decode_steps', -1),
+		)
 
-	model = VGD(
-		"MlpPolicy",
-		env,
-		learning_rate=cfg.train.actor_lr,
-		buffer_size=10000000,
-		learning_starts=1,
-		batch_size=cfg.train.batch_size,
-		tau=cfg.train.tau,
-		gamma=cfg.train.discount,
-		train_freq=cfg.train.train_freq,
-		gradient_steps=cfg.train.utd,
-		action_noise=None,
-		optimize_memory_usage=False,
-		tensorboard_log=cfg.logdir,
-		verbose=1,
-		policy_kwargs=policy_kwargs,
-		diffusion_policy=base_policy,
-		diffusion_act_dim=(cfg.act_steps, cfg.action_dim),
-		critic_backup_combine_type=cfg.train.critic_backup_combine_type,
-		guidance_lambda=getattr(cfg.train, 'guidance_lambda', 0.0),
-		guidance_warmup_steps=getattr(cfg.train, 'guidance_warmup_steps', 0),
-		guidance_time_anneal=getattr(cfg.train, 'guidance_time_anneal', 'linear'),
-		guidance_last_k_steps=getattr(cfg.train, 'guidance_last_k_steps', 0),
-		guidance_decode_steps=getattr(cfg.train, 'guidance_decode_steps', -1),
-	)
+
+
+
 
 	checkpoint_callback = CheckpointCallback(
 		save_freq=cfg.save_model_interval, 
