@@ -58,15 +58,19 @@ To address the limitations of fixed guidance, we propose a framework that **dyna
 Our dynamic weight is decomposed into two distinct factors: **Local Uncertainty** and **Global Stability**.
 
 * **Local Uncertainty ($w_{local}$):** Measures the critic's confidence regarding the current state-action pair using the variance of an ensemble of 4 critics.
+
   $$
   w_{local}(s,a) = \exp\left(-\beta \cdot \frac{\sigma_Q(s,a)}{C_{local}}\right)
-  $$ 
+  $$
+
   *(High variance $\rightarrow$ Low confidence $\rightarrow$ Reduced weight)*
 
 * **Global Stability ($w_{global}$):** Reflects the overall stability of the critic during training using the average Temporal Difference (TD) error.
+
   $$
   w_{global} = \exp\left(-\beta \cdot \frac{\bar{\delta}_{TD}}{C_{global}}\right)
   $$
+  
   *(High TD error $\rightarrow$ Unstable critic $\rightarrow$ Reduced weight)*
 
 ### 2. Dynamic Guidance Formulation
