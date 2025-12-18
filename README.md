@@ -32,9 +32,64 @@ python train_vgd.py --config-path=cfg/robomimic --config-name=vgd_can_guided.yam
 Replace the config file above with the desired one. 
 
 
-# Introduction 
+# 📌 Project Overview
 
-# Method 
+We propose a novel reinforcement learning (RL) based fine-tuning framework designed to significantly enhance the performance of diffusion policies in robotic manipulation. Our approach introduces a **Dynamic Value-Guided Diffusion** mechanism that adaptively adjusts the guidance ratio during the denoising process. Unlike static methods, our framework dynamically calibrates the influence of the value function based on critic uncertainty. This results in superior robustness, sample efficiency, and adaptability across diverse environments and complex tasks, overcoming the inherent limitations of standard imitation learning and fixed-guidance strategies.
+
+---
+
+# 🚩 Problem Statement
+
+While diffusion-based policies have demonstrated impressive capabilities in robotic manipulation via **Imitation Learning (IL)**, they face fundamental performance ceilings imposed by the static nature of dataset imitation. To transcend these limits, recent works have introduced RL-based fine-tuning methods:
+
+* **Diffusion Steering with Reinforcement Learning (DSRL):** Enhances performance by optimizing the *initial noise* of the diffusion process using an RL policy.
+* **Value-Guided Diffusion (VGD):** Attempts more direct steering by leveraging a learned value function (Q-function) to guide the *denoising steps*.
+
+**The Gap:**
+Although VGD provides a more granular control mechanism, it relies on a **fixed guidance ratio**. This lack of flexibility restricts the policy's ability to adapt to varying degrees of uncertainty within different states or tasks, often leading to suboptimal convergence or instability in diverse environments.
+
+---
+
+# 🛠️ Method
+
+To address the limitations of fixed guidance, we propose a framework that **dynamically regulates the guidance ratio ($\lambda$)**. We introduce a dynamic scalar, $w_{uncertainty}$, which modulates the base guidance strength based on the critic's reliability.
+
+### 1. Uncertainty Estimation Components
+Our dynamic weight is decomposed into two distinct factors: **Local Uncertainty** and **Global Stability**.
+
+* **Local Uncertainty ($w_{local}$):** Measures the critic's confidence regarding the current state-action pair using the variance of an ensemble of 4 critics.
+    $$
+    w_{local}(s,a) = \exp\left(-\beta \cdot \frac{\sigma_Q(s,a)}{C_{local}}\right)
+    $$
+    *(High variance $\rightarrow$ Low confidence $\rightarrow$ Reduced weight)*
+
+* **Global Stability ($w_{global}$):** Reflects the overall stability of the critic during training using the average Temporal Difference (TD) error.
+    $$
+    w_{global} = \exp\left(-\beta \cdot \frac{\bar{\delta}_{TD}}{C_{global}}\right)
+    $$
+    *(High TD error $\rightarrow$ Unstable critic $\rightarrow$ Reduced weight)*
+
+### 2. Dynamic Guidance Formulation
+We synthesize these components to compute the comprehensive uncertainty weight, which then scales the base guidance ratio ($\lambda_{base}$).
+
+$$
+w_{uncertainty} = w_{local}(s,a) \cdot w_{global}
+$$
+
+$$
+\lambda_{dynamic} = \lambda_{base} \cdot w_{uncertainty}
+$$
+
+### 3. Final Denoising Guidance
+Finally, this dynamic guidance ratio is applied to the diffusion denoising step. The modified score function (or gradient update) for the action $a_t$ at timestep $t$ is formulated as:
+
+$$
+\nabla_{a_t} \log \tilde{p}(a_t|s) \approx \nabla_{a_t} \log p_\theta(a_t|s) + \lambda_{dynamic} \cdot \nabla_{a_t} Q(s, a_t)
+$$
+
+By dynamically attenuating the guidance when the critic is uncertain or unstable, our method ensures safe and robust policy improvement, outperforming static VGD approaches.
+
+---
 
 # Experimental Results 
 
