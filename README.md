@@ -34,7 +34,7 @@ Replace the config file above with the desired one.
 
 # 📌 Project Overview
 
-We propose a novel reinforcement learning (RL) based fine-tuning framework designed to significantly enhance the performance of diffusion policies in robotic manipulation. Our approach introduces a **Dynamic Value-Guided Diffusion** mechanism that adaptively adjusts the guidance ratio during the denoising process. Unlike static methods, our framework dynamically calibrates the influence of the value function based on critic uncertainty. This results in superior robustness, sample efficiency, and adaptability across diverse environments and complex tasks, overcoming the inherent limitations of standard imitation learning and fixed-guidance strategies.
+We propose a novel reinforcement learning (RL) based fine-tuning framework designed to significantly enhance the performance of diffusion policies in robotic manipulation. Our approach introduces a **Dynamic Value-Guided Denoising** mechanism that adaptively adjusts the guidance ratio during the denoising process. Unlike static methods, our framework dynamically calibrates the influence of the value function based on critic uncertainty. This results in superior robustness, sample efficiency, and adaptability across diverse environments and complex tasks, overcoming the inherent limitations of standard imitation learning and fixed-guidance strategies.
 
 ---
 
@@ -43,7 +43,7 @@ We propose a novel reinforcement learning (RL) based fine-tuning framework desig
 While diffusion-based policies have demonstrated impressive capabilities in robotic manipulation via **Imitation Learning (IL)**, they face fundamental performance ceilings imposed by the static nature of dataset imitation. To transcend these limits, recent works have introduced RL-based fine-tuning methods:
 
 * **Diffusion Steering with Reinforcement Learning (DSRL):** Enhances performance by optimizing the *initial noise* of the diffusion process using an RL policy.
-* **Value-Guided Diffusion (VGD):** Attempts more direct steering by leveraging a learned value function (Q-function) to guide the *denoising steps*.
+* **Value-Guided Denoising (VGD):** Attempts more direct steering by leveraging a learned value function (Q-function) to guide the *denoising steps*.
 
 **The Gap:**
 Although VGD provides a more granular control mechanism, it relies on a **fixed guidance ratio**. This lack of flexibility restricts the policy's ability to adapt to varying degrees of uncertainty within different states or tasks, often leading to suboptimal convergence or instability in diverse environments.
