@@ -32,6 +32,15 @@ python train_vgd.py --config-path=cfg/robomimic --config-name=vgd_can_guided.yam
 Replace the config file above with the desired one. 
 
 
+# Introduction 
+
+# Method 
+
+# Experimental Results 
+
+# Analysis
+
+
 ## Citation
 If you use this code, please cite:
 <pre>
