@@ -38,10 +38,68 @@ Replace the config file above with the desired one.
 
 # Experimental Results 
 
+Baselines: 
+- VGD
+- DSRL
+
+
+
+## Can Task 
+
+<div align="center">
+  <table style="border-collapse: collapse; border: none;">
+    <tr>
+      <td align="center" style="border: none; padding-right: 20px;">
+        <b>DDIM = 4</b><br><br>
+        <img src="https://github.com/user-attachments/assets/608f96b4-653a-4c54-ab05-2809439a7c65" width="400"><br>
+      </td>
+      <td align="center" style="border: none; padding-left: 20px;">
+        <b>DDIM = 8</b><br><br>
+        <img src="https://github.com/user-attachments/assets/e9229751-32b0-4e7f-8019-c1730bb4b98d" width="400"><br>
+      </td>
+    </tr>
+  </table>
+</div>
+
+## Square Task 
+
+<div align="center">
+  <table style="border-collapse: collapse; border: none;">
+    <tr>
+      <td align="center" style="border: none; padding-right: 20px;">
+        <b>DDIM = 4</b><br><br>
+        <img src="https://github.com/user-attachments/assets/7c4d787b-2278-4683-94d5-97a3f6e8c556" width="400"><br>
+      </td>
+      <td align="center" style="border: none; padding-left: 20px;">
+        <b>DDIM = 8</b><br><br>
+        <img src="https://github.com/user-attachments/assets/145d3a87-c982-4f54-afbb-aa63ddc660be" width="400"><br>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
 # Analysis
+
+## Correlation between TD error and λ<sub>t</sub>
+<div align="center">
+  <table style="border-collapse: collapse; border: none;">
+    <tr>
+      <td align="center" style="border: none; padding-right: 20px;">
+        <img src="https://github.com/user-attachments/assets/edf41432-813c-4e5c-8eed-ae4113fe789d" width="400"><br>
+        <sub><b>Figure #. TD Error Visualization of Dynamic VGD on the Robomimic Can Task.</b></sub>
+      </td>
+      <td align="center" style="border: none; padding-left: 20px;">
+        <img src="https://github.com/user-attachments/assets/c3123d68-b1f6-4676-98dc-23e495a24b04" width="400"><br>
+        <sub><b>Figure #. Guidance Value Visualization of Dynamic VGD on the Robomimic Can Task. </b></sub>
+      </td>
+    </tr>
+  </table>
+</div>
 
 
 ## Citation
+
 If you use this code, please cite:
 <pre>
 @inproceedings{ye2025vgd,
