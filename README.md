@@ -38,10 +38,29 @@ Replace the config file above with the desired one.
 
 # Experimental Results 
 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
 Baselines: 
 - VGD
 - DSRL
 
+Tasks 
+
+
+<div align="center">
+  <table style="border-collapse: collapse; border: none;">
+    <tr>
+      <td align="center" style="border: none; padding-right: 20px;">
+        <b>Can</b><br>
+        ![task_can](https://github.com/user-attachments/assets/a558a7d5-6b8b-4fc8-a953-82c90589367f)
+      </td>
+      <td align="center" style="border: none; padding-left: 20px;">
+        <b>Square</b><br>
+        ![task_square](https://github.com/user-attachments/assets/554cc6a6-bdd6-4ff9-952c-13b5aa895ea4)
+      </td>
+    </tr>
+  </table>
+</div>
 
 
 ## Can Task 
@@ -50,16 +69,18 @@ Baselines:
   <table style="border-collapse: collapse; border: none;">
     <tr>
       <td align="center" style="border: none; padding-right: 20px;">
-        <b>DDIM = 4</b><br><br>
+        <b>DDIM = 4</b><br>
         <img src="https://github.com/user-attachments/assets/608f96b4-653a-4c54-ab05-2809439a7c65" width="400"><br>
       </td>
       <td align="center" style="border: none; padding-left: 20px;">
-        <b>DDIM = 8</b><br><br>
+        <b>DDIM = 8</b><br>
         <img src="https://github.com/user-attachments/assets/e9229751-32b0-4e7f-8019-c1730bb4b98d" width="400"><br>
       </td>
     </tr>
   </table>
 </div>
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 ## Square Task 
 
@@ -67,35 +88,66 @@ Baselines:
   <table style="border-collapse: collapse; border: none;">
     <tr>
       <td align="center" style="border: none; padding-right: 20px;">
-        <b>DDIM = 4</b><br><br>
+        <b>DDIM = 4</b><br>
         <img src="https://github.com/user-attachments/assets/7c4d787b-2278-4683-94d5-97a3f6e8c556" width="400"><br>
       </td>
       <td align="center" style="border: none; padding-left: 20px;">
-        <b>DDIM = 8</b><br><br>
+        <b>DDIM = 8</b><br>
         <img src="https://github.com/user-attachments/assets/145d3a87-c982-4f54-afbb-aa63ddc660be" width="400"><br>
       </td>
     </tr>
   </table>
 </div>
 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
-# Analysis
+
+# Discussion
+
+## Guidance Strength λ<sub>t</sub>
+<div align="center">
+  <table style="border-collapse: collapse; border: none;">
+    <tr>
+      <td align="center" style="border: none; padding-right: 20px;">
+        <b>Fixed</b> Guidance Ratio λ (VGD)<br>
+        <img src="https://github.com/user-attachments/assets/3fb9606f-5dba-48c3-81b4-30b28b5518ee" width="400"><br>
+        <sub>Figure #. Lorem Ipsum</sub>
+      </td>
+      <td align="center" style="border: none; padding-left: 20px;">
+        <b>Dynamic</b> Guidance Ratio λ (Ours)<br>
+        <img src="https://github.com/user-attachments/assets/9ad0ff10-35e7-40d9-b0e2-8be634aaadf5" width="400"><br>
+        <sub>Figure #. Lorem Ipsum</sub>
+      </td>
+    </tr>
+  </table>
+</div>
 
 ## Correlation between TD error and λ<sub>t</sub>
 <div align="center">
   <table style="border-collapse: collapse; border: none;">
     <tr>
       <td align="center" style="border: none; padding-right: 20px;">
-        <img src="https://github.com/user-attachments/assets/edf41432-813c-4e5c-8eed-ae4113fe789d" width="400"><br>
-        <sub><b>Figure #. TD Error Visualization of Dynamic VGD on the Robomimic Can Task.</b></sub>
+        <b>TD Error</b><br>
+        <img src="https://github.com/user-attachments/assets/7725dbf1-976d-4c97-a467-26e07b6886b0" width="400"><br>
+        <sub>Figure #. TD Error Visualization of Dynamic VGD on the Robomimic Can Task.</sub>
       </td>
       <td align="center" style="border: none; padding-left: 20px;">
-        <img src="https://github.com/user-attachments/assets/c3123d68-b1f6-4676-98dc-23e495a24b04" width="400"><br>
-        <sub><b>Figure #. Guidance Value Visualization of Dynamic VGD on the Robomimic Can Task. </b></sub>
+        <b>Guidance Strength λ<sub>t</sub></b><br>
+        <img src="https://github.com/user-attachments/assets/9ad0ff10-35e7-40d9-b0e2-8be634aaadf5" width="400"><br>
+        <sub>Figure #. Guidance Value Visualization of Dynamic VGD on the Robomimic Can Task.</sub>
       </td>
     </tr>
   </table>
 </div>
+Initially, the critic training is unstable due to high TD error. During the early training phase (up to 500k environment steps), the guidance strength λ<sub>t</sub> gradually decreases, which coincides with the period of high critic instability. As training progresses and the TD error stabilizes, λ<sub>t</sub> increases correspondingly. These results indicate that our dynamic guidance algorithm adapts to the critic's training stability over time.  
+
+# Conclusion
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+# Future Works 
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 
 ## Citation
