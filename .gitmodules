@@ -1,6 +1,8 @@
 [submodule "stable-baselines3"]
 	path = stable-baselines3
 	url = https://github.com/jebeom/stable-baselines3.git
+	branch = main
 [submodule "dppo"]
 	path = dppo
 	url = https://github.com/jebeom/dppo.git
+	branch = main
