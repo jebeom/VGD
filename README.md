@@ -1,4 +1,4 @@
-## 🚀 Getting Started
+# 🚀 Getting Started
 
 ### 1. Prerequisites (MuJoCo Setup)
 This project requires **MuJoCo 2.1.0**. If you don't have it installed in the default location (`~/.mujoco/mujoco210`), follow these steps:
@@ -138,19 +138,11 @@ By dynamically attenuating the guidance when the critic is uncertain or unstable
 
 ---
 
-# Experimental Results 
+# 🧪 Experimental Results 
 
-Pipeline: Pretrain Diffusion Policy → RL Fine-tune DP with DSRL/VGD/Dynamic VGD
+Our training pipeline involves (1) pretraining a Diffusion Policy on the designated task and (2) subsequently fine-tuning the pretrained model with reinforcement learning using our method. We compare its performance against two baseline methods: DSRL and VGD.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-Baselines: 
-- VGD: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-- DSRL: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-Tasks 
-- Expert demos: ??? 
-
+We evaluate our method on two Robomimic benchmark tasks, Can and Square (see video below).
 
 <div align="center">
   <table style="border-collapse: collapse; border: none;">
@@ -168,7 +160,7 @@ Tasks
 </div>
 
 
-## Can Task 
+### Can Task 
 
 <div align="center">
   <table style="border-collapse: collapse; border: none;">
@@ -185,9 +177,7 @@ Tasks
   </table>
 </div>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-## Square Task 
+### Square Task 
 
 <div align="center">
   <table style="border-collapse: collapse; border: none;">
@@ -204,10 +194,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
   </table>
 </div>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+The results show that our method consistently outperforms the baseline approaches. In particular, Dynamic VGD (ours) exhibits faster convergence, resulting in improved sample efficiency. This performance trend remains robust across different DDIM denoising steps, including DDIM = 4 and DDIM = 8.
 
-
-# Discussion
+# 🗨️ Discussion
 
 ## Guidance Strength λ<sub>t</sub>
 <div align="center">
@@ -244,27 +233,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
     </tr>
   </table>
 </div>
-Initially, the critic training is unstable due to high TD error. During the early training phase (up to 500k environment steps), the guidance strength λ<sub>t</sub> gradually decreases, which coincides with the period of high critic instability. As training progresses and the TD error stabilizes, λ<sub>t</sub> increases correspondingly. These results indicate that our dynamic guidance algorithm adapts to the critic's training stability over time.  
-
-## Robustness to DDIM steps 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-# Conclusion
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Initially, critic training is unstable due to high TD error. During the early training phase (up to 500k environment steps), the guidance strength λ<sub>t</sub> gradually decreases, coinciding with this period of high critic instability. As training progresses and the TD error stabilizes, λ<sub>t</sub> increases accordingly. These results indicate that our dynamic guidance algorithm adapts to the critic's training stability over time.  
 
 # Future Works 
 - Distributional RL to capture value uncertainty
+  - We can adopt distributional reinforcement learning to explicitly model value uncertainty rather than relying on a deterministic value estimate. This uncertainty-aware value representation provides more informative guidance during policy optimization and is particularly important when fine-tuning diffusion-based policies, where inaccurate value estimates can destabilize training.
 - Fine-tuning VLA with Dynamic VGD
-  - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+  - We can fine-tune a pretrained VLA model using Dynamic VGD. By leveraging distributional value estimates, Dynamic VGD balances exploration and exploitation throughout training, enabling stable optimization even during early phases when critic uncertainty is high.
 - Real-world Experiment
-  - Improving sample-efficiency
-  - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-# Reference 
-- VGD
-- DSRL
-- Distributional RL
+  - Our method demonstrates improved sample efficiency compared to baseline approaches, achieving stronger performance with fewer environment interactions.
 
 ## Citation
 
