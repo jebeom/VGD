@@ -1,15 +1,45 @@
-## Installation
-1. Clone repository
+## 🚀 Getting Started
+
+### 1. Prerequisites (MuJoCo Setup)
+This project requires **MuJoCo 2.1.0**. If you don't have it installed in the default location (`~/.mujoco/mujoco210`), follow these steps:
+* **Download and Extract:**
+    ```bash
+    mkdir -p ~/.mujoco
+    wget https://github.com/google-deepmind/mujoco/releases/download/2.1.0/mujoco210-linux-x86_64.tar.gz
+    tar -xzf mujoco210-linux-x86_64.tar.gz -C ~/.mujoco
+    ```
+* **Mujoco Dependency:**
+  ```bash
+  sudo apt update
+  sudo apt install -y libosmesa6-dev libgl1-mesa-glx libglfw3 libglew-dev \
+                     mesa-utils xorg-dev libxrender1 libxext6 libxtst6 \
+                     libxi6 libgl1-mesa-dev
+  ```
+* **Configure Environment Variables:** Append these lines to your `~/.bashrc`:
+    ```bash
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/$USER/.mujoco/mujoco210/bin
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia
+    ```
+    Then run `source ~/.bashrc`.
+
+---
+
+### 2. Installation & Environment Setup
+
+Follow these steps to clone the repository and install the custom forks of DPPO and Stable Baselines3.
+
+#### Step A: Clone Repository with Submodules
+Since this project uses specific versions of DPPO and SB3, you must clone recursively:
 ```
-git clone --recurse-submodules git@github.com:DozenDucc/VGD.git
+git clone --recurse-submodules https://github.com/jebeom/VGD.git
 cd VGD
 ```
-2. Create conda environment
+#### Step B: Create Conda Environment
 ```
-conda create -n vgd python=3.9 -y
-conda activate vgd
+conda create -n dyna_vgd python=3.9 -y
+conda activate dyna_vgd
 ```
-3. Install our fork of DPPO 
+#### Step C: Install Custom Submodules(DPPO) (Editable Mode)
 ```
 cd dppo
 pip install -e .
@@ -17,12 +47,14 @@ pip install -e .[robomimic]
 pip install -e .[gym]
 cd ..
 ```
-4. Install our fork of Stable Baselines3
+#### Step C: Install Custom Submodules(Stable Baselines3) (Editable Mode)
 ```
 cd stable-baselines3
 pip install -e .
 cd ..
 ```
+
+---
 
 ## Running VGD
 To run VGD on Robomimic, call
