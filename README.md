@@ -216,6 +216,9 @@ The results show that our method consistently outperforms the baseline approache
   </table>
 </div>
 
+Vanilla VGD uses a fixed guidance ratio throughout training, whereas our method dynamically adjusts the guidance strength over time.
+
+
 ## Correlation between TD error and λ<sub>t</sub>
 <div align="center">
   <table style="border-collapse: collapse; border: none;">
