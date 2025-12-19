@@ -60,6 +60,15 @@ The diffusion policy checkpoints for the Robomimic and Gym experiments can be fo
 ---
 
 ## Running VGD
+
+To track and log your experiments, you need to configure your WandB API key.
+
+1. **Get your API key:** Log in to [wandb.ai/authorize](https://wandb.ai/authorize) to find your key.
+2. **Export the API key:** Run the following command in your terminal (replace with your actual key):
+   ```bash
+   export WANDB_API_KEY=your_actual_api_key_here
+   ```
+   
 To run VGD on Robomimic, call
 ```
 python train_vgd.py --config-path=cfg/robomimic/dyna_vgd_square --config-name=dyna_vgd_square_ddim8.yaml
