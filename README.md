@@ -47,22 +47,24 @@ pip install -e .[robomimic]
 pip install -e .[gym]
 cd ..
 ```
-#### Step C: Install Custom Submodules(Stable Baselines3) (Editable Mode)
+#### Step D: Install Custom Submodules(Stable Baselines3) (Editable Mode)
 ```
 cd stable-baselines3
 pip install -e .
 cd ..
 ```
 
+### 📥 Note: Pre-trained Checkpoints
+The diffusion policy checkpoints for the Robomimic and Gym experiments can be found [here](https://drive.google.com/drive/folders/1kzC49RRFOE7aTnJh_7OvJ1K5XaDmtuh1?usp=share_link). Download the contents of this folder and place in `./dppo/log`.
+
 ---
 
 ## Running VGD
 To run VGD on Robomimic, call
 ```
-python train_vgd.py --config-path=cfg/robomimic --config-name=vgd_can_guided.yaml
+python train_vgd.py --config-path=cfg/robomimic/dyna_vgd_square --config-name=dyna_vgd_square_ddim8.yaml
 ```
-Replace the config file above with the desired one. 
-
+💡 **Note**: You can select the appropriate config file based on your experiment needs. For instance, if you want to use 4 DDIM steps or switch the task to 'can', locate the corresponding .yaml file in the cfg/ directory and update the command accordingly.
 
 # 📌 Project Overview
 
