@@ -255,6 +255,6 @@ This repository builds on [Stable Baselines3](https://github.com/DLR-RM/stable-b
 
 - **Jebeom Chae** (2025324138) - Jebeom contributed to the project by proposing and implementing Dynamic VGD, running experiments on the Robomimic Benchmark, and creating the presentation materials.
 - **Hyunjin Park** (2025314232) - Hyunjin contributed to the project by organizing the team, proposing the initial project idea, and conducting the experiment in robomimic environment.
-- **Meedeum Cho** (2025
+- **Meedeum Cho** (2025324137) - Meedeum contributed to the project by conducting experiments in both simulated and real-world environments and presenting the work during the mid-term and final presentation sessions. 
   
 
