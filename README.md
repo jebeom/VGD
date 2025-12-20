@@ -59,7 +59,7 @@ The diffusion policy checkpoints for the Robomimic and Gym experiments can be fo
 
 ---
 
-## Running VGD
+## Running Dynamic VGD
 
 To track and log your experiments, you need to configure your WandB API key.
 
@@ -69,7 +69,7 @@ To track and log your experiments, you need to configure your WandB API key.
    export WANDB_API_KEY=your_actual_api_key_here
    ```
    
-To run VGD on Robomimic, call
+To run Dynamic VGD on Robomimic, call
 ```
 python train_vgd.py --config-path=cfg/robomimic/dyna_vgd_square --config-name=dyna_vgd_square_ddim8.yaml
 ```
@@ -102,19 +102,19 @@ Our dynamic weight is decomposed into two distinct factors: **Local Uncertainty*
 
 - **Local Uncertainty ($w_{local}$):** Measures the critic's confidence regarding the current state-action pair using the variance of an ensemble of 4 critics.
 
-  $$
-  w_{local}(s,a) = \exp\left(-\beta \cdot \frac{\sigma_Q(s,a)}{C_{local}}\right)
-  $$
+$$
+w_{local}(s,a) = \exp\left(-\beta \cdot \frac{\sigma_Q(s,a)}{C_{local}}\right)
+$$
 
-  *(High variance $\rightarrow$ Low confidence $\rightarrow$ Reduced weight)*
+  *(High variance -> Low confidence -> Reduced weight)*
 
 - **Global Stability ($w_{global}$):** Reflects the overall stability of the critic during training using the average Temporal Difference (TD) error.
 
-  $$
-  w_{global} = \exp\left(-\beta \cdot \frac{\bar{\delta}_{TD}}{C_{global}}\right)
-  $$
+$$
+w_{global} = \exp\left(-\beta \cdot \frac{\bar{\delta}_{TD}}{C_{global}}\right)
+$$
   
-  *(High TD error $\rightarrow$ Unstable critic $\rightarrow$ Reduced weight)*
+  *(High TD error -> Unstable critic -> Reduced weight)*
 
 ### 2. Dynamic Guidance Formulation
 We synthesize these components to compute the comprehensive uncertainty weight, which then scales the base guidance ratio ($\lambda_{base}$).
@@ -246,17 +246,15 @@ Initially, critic training is unstable due to high TD error. During the early tr
 - Real-world Experiment
   - Our method demonstrates improved sample efficiency compared to baseline approaches, achieving stronger performance with fewer environment interactions.
 
-## Citation
-
-If you use this code, please cite:
-<pre>
-@inproceedings{ye2025vgd,
-  title     = {Steering Diffusion Policies with Value-Guided Denoising},
-  author    = {Ye, Hanming},
-  booktitle = {NeurIPS 2025 Workshop on Embodied World Models for Decision Making},
-  year      = {2025}
-}
-</pre>
-
 ## Acknowledgements
-This repository builds on [Stable Baselines3](https://github.com/DLR-RM/stable-baselines3) and [DPPO](https://github.com/irom-princeton/dppo). Parts of code adapted from [DSRL](https://github.com/ajwagen/dsrl)
+This repository builds on [Stable Baselines3](https://github.com/DLR-RM/stable-baselines3) and [DPPO](https://github.com/irom-princeton/dppo). Parts of code adapted from [DSRL](https://github.com/ajwagen/dsrl), [VGD](https://github.com/DozenDucc/VGD)
+
+--- 
+
+# Contribution of each team member
+
+- **Jebeom Chae** (2025324138) - Jebeom contributed to the project by proposing and implementing Dynamic VGD, running experiments on the Robomimic Benchmark, and creating the presentation materials.
+- **Hyunjin Park** (2025314232) - Hyunjin contributed to the project by organizing the team, proposing the initial project idea, and conducting the experiment in robomimic environment.
+- **Meedeum Cho** (2025
+  
+
