@@ -31,8 +31,8 @@ Follow these steps to clone the repository and install the custom forks of DPPO 
 #### Step A: Clone Repository with Submodules
 Since this project uses specific versions of DPPO and SB3, you must clone recursively:
 ```
-git clone --recurse-submodules https://github.com/jebeom/VGD.git
-cd VGD
+git clone --recurse-submodules https://github.com/jebeom/Dynamic_VGD.git
+cd Dynamic_VGD
 ```
 #### Step B: Create Conda Environment
 ```
